@@ -36,10 +36,7 @@ export default async function getAdvocates(
     const response = await fetch(
       buildQueryString(`${BASE_URL}/api/advocates`, {
         ...(queryParams || {}),
-      }),
-      {
-        cache: "no-cache",
-      }
+      })
     );
     if (response.ok) {
       const jsonRes = await response.json();
@@ -47,6 +44,7 @@ export default async function getAdvocates(
     }
     return { data: undefined, error: "Failed to fetch advocates" };
   } catch (error) {
+    console.log(error);
     const errorMessage =
       error instanceof Error
         ? `${error.name}\n${error.message}`

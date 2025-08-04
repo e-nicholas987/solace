@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import buildQueryString from "@/lib/helpers/buildQueryString";
 import { Pagination } from "@/lib/services/getAdvocates";
@@ -37,7 +37,7 @@ const renderResultText = (
   );
 };
 
-export default function Search({
+function SearchComponent({
   pagination,
 }: {
   pagination?: Pagination | undefined;
@@ -117,5 +117,17 @@ export default function Search({
         </div>
       </div>
     </div>
+  );
+}
+
+export default function Search({
+  pagination,
+}: {
+  pagination?: Pagination | undefined;
+}) {
+  return (
+    <Suspense>
+      <SearchComponent pagination={pagination} />
+    </Suspense>
   );
 }

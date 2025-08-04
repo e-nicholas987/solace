@@ -2,13 +2,14 @@
 
 import { tableHeaders } from "@/lib/constants/tableHeaders";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 interface EmptyStateProps {
   type: "error" | "empty" | "loading";
   error?: React.ReactNode;
 }
 
-export default function EmptyState({ type, error }: EmptyStateProps) {
+function EmptyStateComponent({ type, error }: EmptyStateProps) {
   const searchParams = useSearchParams();
   const searchTerm = searchParams.get("q");
   const router = useRouter();
@@ -44,5 +45,13 @@ export default function EmptyState({ type, error }: EmptyStateProps) {
         )}
       </th>
     </tr>
+  );
+}
+
+export default function EmptyState({ type, error }: EmptyStateProps) {
+  return (
+    <Suspense>
+      <EmptyStateComponent type={type} error={error} />
+    </Suspense>
   );
 }

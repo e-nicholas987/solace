@@ -1,5 +1,6 @@
 import { Advocate } from "@/db/schema";
 import buildQueryString from "../helpers/buildQueryString";
+import { BASE_URL } from "../constants/baseUrl";
 
 export interface Pagination {
   page: number;
@@ -33,7 +34,7 @@ export default async function getAdvocates(
 }> {
   try {
     const response = await fetch(
-      buildQueryString(`http://localhost:3000/api/advocates`, {
+      buildQueryString(`${BASE_URL}/api/advocates`, {
         ...(queryParams || {}),
       }),
       {
@@ -52,7 +53,7 @@ export default async function getAdvocates(
         : "Failed to fetch advocates";
     return {
       data: undefined,
-      error: `${errorMessage}\nPlease make sure you are running on http://localhost:3000 👍🏼`,
+      error: `${errorMessage}\nPlease make sure you are running on ${BASE_URL} 👍🏼`,
     };
   }
 }
